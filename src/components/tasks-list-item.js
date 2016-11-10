@@ -10,7 +10,7 @@ export default class TodosListItem extends React.Component {
 	}
 	renderTaskSection() {
 		// console.log(this.props.data);
-		var tasks=this.props.data.tasks;
+		const tasks=this.props.data.tasks;
 		return tasks.map((task,index)=>{
 			return <ProItem {...this.props} itemData={task} key={index} ></ProItem>
 		});
@@ -31,9 +31,9 @@ export default class TodosListItem extends React.Component {
 	}
 	onAddClick(){
 		// 获取项目负责人名字
-		var personname=this.props.task.name;
+		const personname=this.props.task.name;
 		// 获取日期
-		var date=this.props.data.date.join('');
+		const date=this.props.data.date.join('');
 		this.props.createTask(personname,date);
 	}
 }

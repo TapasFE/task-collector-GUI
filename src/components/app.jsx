@@ -81,7 +81,42 @@ const tasksList = [
 	}
 ];
 
+// var URL='http://127.0.0.1:4333/api/tasks?date=2016-11-10';
+// var headers = new Headers();
 
+// headers.append('Content-Type', 'application/json');
+// var req = new Request(URL, {method: 'GET', mode: 'no-cors',headers: headers});
+
+// function fetchDemo() {
+//     fetch(URL).then(function(response) {
+//         console.log(response);
+//     });
+// }
+// fetchDemo()
+
+// !function loadXMLDoc()
+// {
+// var xmlhttp;
+// if (window.XMLHttpRequest)
+//   {
+//   xmlhttp=new XMLHttpRequest();
+//   }
+// else
+//   {
+//   xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+//   }
+// xmlhttp.onreadystatechange=function()
+//   {
+//   if (xmlhttp.readyState==4 && xmlhttp.status==200)
+//     {
+//     console.log(xmlhttp.responseText);
+//     }
+//   }
+// xmlhttp.open("GET","http://127.0.0.1:4333/api/tasks?date=2016-11-10",true);
+// xmlhttp.send();
+// }()
+
+console.log('intitial stage');
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
