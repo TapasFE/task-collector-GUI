@@ -6,7 +6,7 @@ const tasksList = [
 		name: '小明',
 		proList:[
 			{
-				date:[2016,11,'08'],
+				date:[2016,11,'09'],
 				tasks:[
 					{
 						proName:'cbndata web',
@@ -26,7 +26,7 @@ const tasksList = [
 				]
 			},
 			{
-				date:[2016,11,'09'],
+				date:[2016,11,'10'],
 				tasks:[
 					{
 						proName:'cbndata web1',
@@ -47,7 +47,7 @@ const tasksList = [
 		name: '小黑',
 		proList:[
 			{
-				date:[2016,11,'08'],
+				date:[2016,11,'09'],
 				tasks:[
 					{
 						proName:'HugoInvest',
@@ -62,7 +62,7 @@ const tasksList = [
 				]
 			},
 			{
-				date:[2016,11,'09'],
+				date:[2016,11,'10'],
 				tasks:			[
 					{
 						proName:'HugoInvest1',
@@ -80,6 +80,8 @@ const tasksList = [
 		],
 	}
 ];
+
+
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -107,9 +109,13 @@ export default class App extends React.Component {
 			/>
 		)
 	}
-	createTask(name,date) {
+	queryName_Date(name,date){
 		const person = _.find(this.state.tasksList, task=> task.name === name);
 		const day = _.find(person.proList, pro=> pro.date.join('') === date);
+		return [person, day];
+	}
+	createTask(name,date) {
+		const [person,day]=this.queryName_Date(name,date);
 		day.tasks.push({
 			proName:'',
 			proContents:[''],
@@ -118,18 +124,14 @@ export default class App extends React.Component {
 		this.setState({ tasksList: this.state.tasksList});
 	}
 	saveTask(name,date,oldTask,newTask) {
-		const person = _.find(this.state.tasksList, task=> task.name === name);
-		const day = _.find(person.proList, pro=> pro.date.join('') === date);
+		const [person,day]=this.queryName_Date(name,date);
 		let task = _.find(day.tasks, task=> task === oldTask);
 		task= newTask;
 		this.setState({ tasksList: this.state.tasksList});
 	}
 	deleteTask(name,date,oldTask) {
-		const person = _.find(this.state.tasksList, task=> task.name === name);
-		const day = _.find(person.proList, pro=> pro.date.join('') === date);
+		const [person,day]=this.queryName_Date(name,date);
 		_.remove(day.tasks, task=> task === oldTask);
 		this.setState({ tasksList: this.state.tasksList});
-	}
-	deleteTaskItem(taskToDelete) {
 	}
 }

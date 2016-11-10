@@ -45,6 +45,9 @@ export default class proItem extends React.Component {
 		)
 
 	}
+	getNameDateData(){
+		return [this.props.task.name, this.props.data.date.join(''), this.props.itemData];
+	}
 	onEditClick() {
 		this.setState({editing: true});
 	}
@@ -52,12 +55,8 @@ export default class proItem extends React.Component {
 		this.setState({editing: false});
 	}
 	onSaveClick(event) {
-		var itemData=this.props.itemData;
-		// 获取项目负责人名字
-		var personname=this.props.task.name;
-		// 获取日期
-		var date=this.props.data.date.join('');
-		// 修改原始数据
+		// 获取项目负责人名字、日期、条目数据
+		const [personname, date, itemData]=this.getNameDateData();
 		var arrs=Array.from(this.pro.getElementsByTagName('input'));
 		// 验证数据
 		var invalid=arrs.some((item)=>item.value=='');
@@ -72,19 +71,14 @@ export default class proItem extends React.Component {
 		this.setState({ editing: false});
 	}
 	onDelClick(event) {
-		// 获取项目负责人名字
-		var personname=this.props.task.name;
-		// 获取日期
-		var date=this.props.data.date.join('');
+		// 获取项目负责人名字、日期
+		const [personname, date]=this.getNameDateData();
 		this.props.deleteTask(personname,date,this.props.itemData);
 	}
 	onItemDelClick(event){
 		var ptext=event.target.parentNode.innerText;
-		var itemData=this.props.itemData;
-		// 获取项目负责人名字
-		var personname=this.props.task.name;
-		// 获取日期
-		var date=this.props.data.date.join('');
+		// 获取项目负责人名字、日期、条目数据
+		const [personname, date, itemData]=this.getNameDateData();
 		// 筛选数据
 		var arr = itemData.proContents.filter((item)=>ptext.indexOf(item)==-1);
 		itemData.proContents=arr;

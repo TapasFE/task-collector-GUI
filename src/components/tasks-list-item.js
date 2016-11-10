@@ -9,6 +9,7 @@ export default class TodosListItem extends React.Component {
 		};
 	}
 	renderTaskSection() {
+		// console.log(this.props.data);
 		var tasks=this.props.data.tasks;
 		return tasks.map((task,index)=>{
 			return <ProItem {...this.props} itemData={task} key={index} ></ProItem>
