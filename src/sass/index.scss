@@ -1,0 +1,55 @@
+*{
+	padding:0;
+	margin:0;
+	box-sizing:border-box;
+}
+body{
+	background: rgba(255,255,255,.3);
+	padding:60px;
+	font:13px/1.5  Arial,'Microsoft YaHei';
+}
+@mixin avatar($red:255,$green:255,$blue:255){
+	background: rgba(random()*$red,random()*$green,random()*$blue,.3);
+}
+@function avatar($red:255,$green:255,$blue:255){
+	@return rgba(random()*$red,random()*$green,random()*$blue,.3);
+}
+.wrap::after{
+	content:'';
+	display:table;
+	clear:both;
+}
+.msg{
+	float:left;
+	position:relative;
+	max-width:300px;
+	min-width:200px;
+	padding:15px;
+	border:1px solid #ccc;
+	border-radius:7px;
+	margin-bottom:30px;
+	h3{
+		position:absolute;
+		top:0;
+		left:0;
+		transform:translateX(-120%);
+		width:40px;
+		height:40px;
+		border-radius:50%;
+		text-align:center;
+		line-height:40px;
+		color:#fff;
+		background:avatar();
+		/*@include avatar();*/
+	}
+	h2{
+		font-size:14px;
+	}
+	.content{
+		text-indent:1.5em;
+		&>p:first-child{
+			text-indent:.5em;
+			font-weight:bold;
+		}
+	}
+}
