@@ -1,22 +1,16 @@
 import React from 'react';
 import ProItem from './item.js';
 
+// console.log('tasks-list-item.js --- start');
 export default class TodosListItem extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			editing: false,
-		};
-	}
 	renderTaskSection() {
-		// console.log(this.props.data);
-		const tasks=this.props.data.tasks;
+		const {tasks} = this.props;
+		if (!tasks || !tasks.length) return;
 		return tasks.map((task,index)=>{
 			return <ProItem {...this.props} itemData={task} key={index} ></ProItem>
 		});
 	}
 	render() {
-		// console.log(33,this.props);
 		return (
 			<div className='content'>
 				<h2>
@@ -30,25 +24,9 @@ export default class TodosListItem extends React.Component {
 		);
 	}
 	onAddClick(){
-		// 获取项目负责人名字
-		const personname=this.props.task.name;
-		// 获取日期
-		const date=this.props.data.date.join('');
-		this.props.createTask(personname,date);
+		// 获取项目负责人名字、日期
+		const {name, date, createTask} = this.props;
+		createTask(name,date);
 	}
 }
-// 		{
-// 			date:[2016,11,11],
-// 			tasks:[
-// 				{
-// 					proName:'cbndata web',
-// 					proContents:['编写通用组件','弹窗','轮播器','导航栏'],
-// 					editing:false,
-// 				},
-// 				{
-// 					proName:'cbndata page',
-// 					proContents:['优化弹窗组件在移动端的的显示效果和交互','编写报告列表页面'],
-// 					editing:false,
-// 				},
-// 			]
-// 		},
+// console.log('tasks-list-item.js --- end');
