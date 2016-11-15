@@ -1,10 +1,16 @@
 import React from 'react';
 
 export default class TasdAdd extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      task:''
+    }
+  }
   render() {
     return (
       <div className='taskadd'>
-        <label> 姓名: <input type="text" defaultValue=''  ref={name=>this.name=name} /> </label>
+        <label> 姓名: <input type="text" defaultValue={this.state.task} /> </label>
         <br/>
         <textarea name="task" id="" cols="30" rows="10" placeholder='请输入内容...' ref={input=>this.input=input}></textarea>
         <br/> 
@@ -23,9 +29,9 @@ export default class TasdAdd extends React.Component {
       method: 'POST', 
       mode: 'no-cors',
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body:"user="+this.name.value+"&content="+this.input.value,
+      body:'user=${this.name.value}&content=${this.state.task}',
     });
     fetch(req);
   }

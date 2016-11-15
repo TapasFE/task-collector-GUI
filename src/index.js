@@ -4,12 +4,13 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 import HomePage from './components/home-page.jsx';
 import TaskAdd from './components/task-add.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './sass/index.scss';
 
 render((
   <Router history={browserHistory}>
-    <Route path="/" component = {HomePage} />
+    <Route path="/" component={HomePage} />
     <Route path="/taskAdd" component = {TaskAdd} />
   </Router>
 ), document.getElementById('app'))
