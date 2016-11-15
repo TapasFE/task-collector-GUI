@@ -2,24 +2,15 @@ import React from 'react';
 import {render} from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
-import Test from './components/home-test.jsx';
-import UI from './components/home-ui.jsx';
 import HomePage from './components/home-page.jsx';
+import TaskAdd from './components/task-add.jsx';
 
-import Develop from './components/home-develop.jsx';
 import './sass/index.scss';
 
-// render(
-// 	<HomePage/>,
-// 	document.getElementById('app')
-// );
 render((
   <Router history={browserHistory}>
-    <Route path="/" component={HomePage}>
-      <IndexRoute component={Develop}/>
-      <Route path="/test" component={Test}/>
-      <Route path="/ui" component={UI}/>
-    </Route>
+    <Route path="/" component = {HomePage} />
+    <Route path="/taskAdd" component = {TaskAdd} />
   </Router>
 ), document.getElementById('app'))
 

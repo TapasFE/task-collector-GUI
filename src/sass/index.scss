@@ -3,15 +3,18 @@
 	margin:0;
 	box-sizing:border-box;
 }
+input, textarea{
+	outline:none
+}
 body{
 	background: rgba(255,255,255,.3);
 	padding:60px;
 	font:13px/1.5  Arial,'Microsoft YaHei';
 }
-@mixin avatar($red:255,$green:255,$blue:255){
+@mixin avatar($red:200,$green:200,$blue:200){
 	background: rgba(random()*$red,random()*$green,random()*$blue,.3);
 }
-@function avatar($red:255,$green:255,$blue:255){
+@function avatar($red:200,$green:200,$blue:200){
 	@return rgba(random()*$red,random()*$green,random()*$blue,.3);
 }
 .wrap::after{
@@ -37,29 +40,47 @@ body{
 		height:40px;
 		border-radius:50%;
 		text-align:center;
+		font-size:13px;
 		line-height:40px;
 		color:#fff;
 		background:avatar();
 		/*@include avatar();*/
 	}
-	h2{
-		font-size:14px;
-	}
 	.content{
 		text-indent:1.5em;
-		&>p:first-child{
-			text-indent:.5em;
-			font-weight:bold;
-		}
 	}
 }
-.develop{
-	color:red;
+.taskadd{
+	input{
+		border:1px solid #ccc;
+	}
+	textarea{
+		border:1px solid #ccc;
+		font-size:13px;
+		height:300px;
+		margin:10px auto;
+		padding:2px;
+		width:480px;
+		resize:none;
+	}
+	a{
+		text-decoration: none;
+	}
 }
-.test{
-	color:orange;
+.query{
+	label{
+		color:#333;
+		font-weight:400;
+	}
+	input{
+		height: 33px;
+		border:1px solid #ccc;
+		border-radius:3px;
+	}
+	.btn{
+		position: relative;
+		top: -1px;
+	}
 }
-.ui{
-	color:green;
-}
+
 
