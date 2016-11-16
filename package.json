@@ -1,10 +1,10 @@
 {
-  "name": "task-collector",
+  "name": "task-collector-ui",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node build/dev-server.js",
+    "dev": "node -r dotenv/config build/dev-server.js",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.jsx src"
   },
@@ -32,6 +32,7 @@
     "babel-register": "^6.0.0",
     "connect-history-api-fallback": "^1.1.0",
     "css-loader": "^0.25.0",
+    "dotenv": "^2.0.0",
     "eslint": "^3.9.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.13.3",

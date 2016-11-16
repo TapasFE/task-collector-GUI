@@ -1,25 +1,23 @@
 import React from 'react';
-import TasksList from './tasks-list.js';
+import {Link} from 'react-router';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>Tasks List2</h1>
-        { this.createTaskList() }
+export default props => {
+  const {routes} = props;
+  const route = routes[routes.length - 1];
+  return (
+    <div className="container flex-col">
+      <div className="flex-row">
+        <h1>Task Collector</h1>
+        <ul className="nav nav-pills">
+          <li className={route.name === 'list' ? 'active' : ''}>
+            <Link to="/">列表</Link>
+          </li>
+          <li className={route.name === 'create' ? 'active' : ''}>
+            <Link to="/create">撰写</Link>
+          </li>
+        </ul>
       </div>
-    );
-  }
-  createTaskList(){
-    let lists = this.props.tasksList;
-    return Object.keys(lists).map((name)=>{
-      let tasks = lists[name];
-      return <TasksList 
-        {...this.props}
-        key = {name}
-        data = {tasks} 
-        name = {name}
-      />;
-    });
-  }
+      <div className="content flex-auto flex-col">{props.children}</div>
+    </div>
+  );
 }
