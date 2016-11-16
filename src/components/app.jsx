@@ -20,4 +20,4 @@ export default props => {
       <div className="content flex-auto flex-col">{props.children}</div>
     </div>
   );
-}
+};
