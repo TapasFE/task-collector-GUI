@@ -19,7 +19,7 @@ export default class App extends React.Component {
         data = {tasks} 
         name = {name}
         {...this.props}
-      />
+      />;
     });
   }
 }

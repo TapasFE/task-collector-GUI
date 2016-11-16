@@ -5,7 +5,7 @@ export default class TasdAdd extends React.Component {
     super(props);
     this.state = {
       task:''
-    }
+    };
   }
   render() {
     return (

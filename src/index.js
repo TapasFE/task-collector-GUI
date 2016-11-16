@@ -13,7 +13,7 @@ render((
     <Route path="/" component={HomePage} />
     <Route path="/taskAdd" component = {TaskAdd} />
   </Router>
-), document.getElementById('app'))
+), document.getElementById('app'));
 
 // <Router history={browserHistory}>
 //   <Route path="/" component={App}>

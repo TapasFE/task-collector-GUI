@@ -22,7 +22,7 @@ export default class HomePage extends React.Component {
       tasksList,
       user: '',
       date: moment().format('YYYY-MM-DD'),
-    }
+    };
   }
   render() {
     return (
@@ -40,7 +40,7 @@ export default class HomePage extends React.Component {
     this.fetchData(null,date);
   }
 
-  adapter (data){
+  adapter(data) {
     let tasksList = {};
     // 转换成中间数据
     data.map((item,index)=> {
@@ -69,11 +69,11 @@ export default class HomePage extends React.Component {
         'Content-Type':'application/json'
       }
     });
-    fetch(req).then(function(res) {
-        return res.json();
+    fetch(req).then(function (res) {
+      return res.json();
     }).then((res)=> {
       this.setState({ tasksList: this.adapter(res.rows) });
-    })
+    });
   }
   userChange(e) {
     this.state.user = e.target.value;
