@@ -30,7 +30,7 @@ export default class HomePage extends React.Component {
         <label> User:  <input type="text" defaultValue={this.state.user} onChange={this.userChange.bind(this)} /> </label>
         <label> Date:  <input type="text" defaultValue={this.state.date} onChange={this.dateChange.bind(this)} /> </label>
         <a onClick={this.onQueryClick.bind(this)} className="btn btn-default" >query</a>
-        <a href="/taskAdd"  className="btn btn-default" >任务添加</a>
+        <NavLink to="/taskAdd"  className="btn btn-default" >任务添加</NavLink>
         <App tasksList={this.state.tasksList} />
       </div>
     );
@@ -61,7 +61,7 @@ export default class HomePage extends React.Component {
     let arr = [];
     if(user)arr.push('user='+user);
     if(date)arr.push('&date='+date);
-    let URL='/api/tasks?' + arr.join('');
+    let url='/api/tasks?' + arr.join('');
     // let URL='http://127.0.0.1:4333/api/tasks?'+query;
     let req = new Request(URL, {
       method: 'GET',

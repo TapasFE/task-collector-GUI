@@ -15,10 +15,10 @@ export default class App extends React.Component {
     return Object.keys(lists).map((name)=>{
       let tasks = lists[name];
       return <TasksList 
+        {...this.props}
         key = {name}
         data = {tasks} 
         name = {name}
-        {...this.props}
       />;
     });
   }
