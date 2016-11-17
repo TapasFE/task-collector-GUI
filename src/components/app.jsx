@@ -15,6 +15,9 @@ export default props => {
           <li className={route.name === 'create' ? 'active' : ''}>
             <Link to="/create">撰写</Link>
           </li>
+          <li>
+            <a target=_blank href="https://github.com/TapasFE/task-collector-gui/issues">反馈</a>
+          </li>
         </ul>
       </div>
       <div className="content flex-auto flex-col">{props.children}</div>
