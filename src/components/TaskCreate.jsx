@@ -1,10 +1,12 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
+import {formatDate, debounce} from '../utils';
 
 export default class TaskCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      date: formatDate(new Date),
       name: '',
       lastDay: '',
       today: '',
@@ -40,7 +42,12 @@ export default class TaskCreate extends React.Component {
   getHandlerChange(key) {
     return e => {
       this.setState({[key]: e.target.value});
+      debounce(this.saveData, 500);
     };
+  }
+  
+  saveData() {
+    localStorage.CBN_task = JSON.stringify(this.state);
   }
 
   handleSubmit = e => {
@@ -63,8 +70,17 @@ export default class TaskCreate extends React.Component {
       body: JSON.stringify(data),
     })
     .then(data => {
-      console.log(data);
+      localStorage.removeItem('CBN_task');
       browserHistory.push('/');
     });
+  }
+
+  componentDidMount() {
+    const date_state = this.state.date;
+    const cache = JSON.parse(localStorage.CBN_task ? localStorage.CBN_task : null);
+    const date_cache = (cache ? cache : {}).date;
+    if(date_cache && date_state === date_cache){
+      this.setState(cache);
+    }
   }
 }
