@@ -5,22 +5,17 @@
   "main": "index.js",
   "scripts": {
     "dev": "node build/dev-server.js",
-    "build": "node build/build.js",
+    "predeploy": "node build/build.js",
+    "deploy": "rsync -r dist/ -e 'ssh -p 10522' -v --delete root@test:~/web/task-collector/static",
     "lint": "eslint --ext .js,.jsx src"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "bootstrap": "^3.3.7",
-    "jquery": "^3.1.1",
-    "lodash": "^4.16.6",
-    "moment": "^2.16.0",
+  "devDependencies": {
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-router": "^3.0.0"
-  },
-  "devDependencies": {
+    "react-router": "^3.0.0",
     "autoprefixer": "^6.4.0",
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.0",
