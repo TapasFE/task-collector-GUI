@@ -12,6 +12,7 @@ export default class TaskCreate extends React.Component {
       today: '',
       risks: '',
     };
+    this.debouncedSaveData = debounce(this.saveData, 500);
   }
 
   render() {
@@ -24,6 +25,7 @@ export default class TaskCreate extends React.Component {
         </div>
         <div className="form-group">
           <label>昨日任务</label>
+          <a className="btn btn-default btn-sm" onClick={this.lastDayReset}  >昨日任务复位</a>
           <textarea className="form-control" value={lastDay} onChange={this.getHandlerChange('lastDay')} />
         </div>
         <div className="form-group">
@@ -42,12 +44,38 @@ export default class TaskCreate extends React.Component {
   getHandlerChange(key) {
     return e => {
       this.setState({[key]: e.target.value});
-      debounce(this.saveData, 500);
+      this.debouncedSaveData();
+      if (key === 'name'){
+        this.loadLastDay();
+      }
     };
   }
   
-  saveData() {
+  saveData = () => {
     localStorage.CBN_task = JSON.stringify(this.state);
+  }
+
+  lastDayReset = () => {
+    this.loadLastDay();
+    this.debouncedSaveData();
+  }
+
+  loadLastDay() {
+    const {user} = this.state;
+    if (!user) return;
+    const date = formatDate(new Date(new Date()-1000*60*60*24));
+    fetch(`/api/tasks?user=${user}&date=${date}`)
+    .then(res => res.json())
+    .then(data => data.rows.map(item => {
+      try {
+        item.data = JSON.parse(item.content);
+      } catch (e) {
+        // ignore invalid data
+      }
+      item.data = item.data || {};
+      return item.lastDay;
+    }))
+    .then(lastDay => lastDay && this.setState({lastDay}));
   }
 
   handleSubmit = e => {
@@ -69,18 +97,15 @@ export default class TaskCreate extends React.Component {
       },
       body: JSON.stringify(data),
     })
-    .then(data => {
+    .then(() => {
       localStorage.removeItem('CBN_task');
       browserHistory.push('/');
     });
   }
 
   componentDidMount() {
-    const date_state = this.state.date;
     const cache = JSON.parse(localStorage.CBN_task ? localStorage.CBN_task : null);
-    const date_cache = (cache ? cache : {}).date;
-    if(date_cache && date_state === date_cache){
-      this.setState(cache);
-    }
+    const {date} = cache ? cache : {};
+    date && this.setState(cache);
   }
 }

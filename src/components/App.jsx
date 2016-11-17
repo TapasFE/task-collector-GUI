@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-export default props => {
+export default function App(props) {
   const {routes} = props;
   const route = routes[routes.length - 1];
   return (
@@ -23,4 +23,4 @@ export default props => {
       <div className="content flex-auto flex-col">{props.children}</div>
     </div>
   );
-};
+}
