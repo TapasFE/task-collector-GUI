@@ -6,7 +6,7 @@ export default props => {
   const route = routes[routes.length - 1];
   return (
     <div className="container flex-col">
-      <div className="flex-row">
+      <header className="flex-row">
         <h1>Task Collector</h1>
         <ul className="nav nav-pills">
           <li className={route.name === 'list' ? 'active' : ''}>
@@ -16,10 +16,10 @@ export default props => {
             <Link to="/create">撰写</Link>
           </li>
           <li>
-            <a target=_blank href="https://github.com/TapasFE/task-collector-gui/issues">反馈</a>
+            <a target="_blank" href="https://github.com/TapasFE/task-collector-gui/issues">反馈</a>
           </li>
         </ul>
-      </div>
+      </header>
       <div className="content flex-auto flex-col">{props.children}</div>
     </div>
   );
