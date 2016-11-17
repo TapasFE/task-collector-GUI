@@ -2,17 +2,30 @@ import React from 'react';
 import {browserHistory} from 'react-router';
 import {formatDate, debounce} from '../utils';
 
+const TASK_KEY = '__task';
+
 export default class TaskCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: formatDate(new Date),
       name: '',
       lastDay: '',
       today: '',
       risks: '',
     };
     this.debouncedSaveData = debounce(this.saveData, 500);
+    this.debouncedLoadData = debounce(this.loadLastDay, 2000);
+  }
+
+  componentDidMount() {
+    let cache;
+    try {
+      cache = JSON.parse(localStorage.getItem(TASK_KEY));
+    } catch (e) {
+      return;
+    }
+    cache && this.setState(cache);
+    this.debouncedLoadData();
   }
 
   render() {
@@ -25,7 +38,7 @@ export default class TaskCreate extends React.Component {
         </div>
         <div className="form-group">
           <label>昨日任务</label>
-          <a className="btn btn-default btn-sm" onClick={this.lastDayReset}  >昨日任务复位</a>
+          <button className="btn btn-default btn-xs" onClick={this.fillWithLastDay} disabled={!this.hasCachedLastDay()}>填入昨日数据</button>
           <textarea className="form-control" value={lastDay} onChange={this.getHandlerChange('lastDay')} />
         </div>
         <div className="form-group">
@@ -45,37 +58,48 @@ export default class TaskCreate extends React.Component {
     return e => {
       this.setState({[key]: e.target.value});
       this.debouncedSaveData();
-      if (key === 'name'){
-        this.loadLastDay();
-      }
+      key === 'name' && this.debouncedLoadData();
     };
   }
-  
+
   saveData = () => {
-    localStorage.CBN_task = JSON.stringify(this.state);
+    const {name, lastDay, today, risks} = this.state;
+    localStorage.setItem(TASK_KEY, JSON.stringify({
+      name, lastDay, today, risks,
+    }));
   }
 
-  lastDayReset = () => {
-    this.loadLastDay();
-    this.debouncedSaveData();
+  fillWithLastDay = () => {
+    this.setState({
+      lastDay: this.state.cachedLastDay,
+    });
+  }
+
+  hasCachedLastDay() {
+    return this.state.cachedLastDay;
   }
 
   loadLastDay() {
-    const {user} = this.state;
-    if (!user) return;
-    const date = formatDate(new Date(new Date()-1000*60*60*24));
-    fetch(`/api/tasks?user=${user}&date=${date}`)
+    const {name} = this.state;
+    if (!name) return;
+    const date = formatDate(new Date(Date.now() - 24 * 60 * 60 * 1000));
+    fetch(`/api/tasks?user=${name}&date=${date}`)
     .then(res => res.json())
-    .then(data => data.rows.map(item => {
+    .then(data => data.rows[0])
+    .then(item => {
+      if (!item) return;
+      let data;
       try {
-        item.data = JSON.parse(item.content);
+        data = JSON.parse(item.content);
       } catch (e) {
         // ignore invalid data
       }
-      item.data = item.data || {};
-      return item.lastDay;
-    }))
-    .then(lastDay => lastDay && this.setState({lastDay}));
+      const {today} = data || {};
+      this.setState({
+        lastDay: this.state.lastDay || today,
+        cachedLastDay: today,
+      });
+    });
   }
 
   handleSubmit = e => {
@@ -98,14 +122,8 @@ export default class TaskCreate extends React.Component {
       body: JSON.stringify(data),
     })
     .then(() => {
-      localStorage.removeItem('CBN_task');
+      localStorage.removeItem(TASK_KEY);
       browserHistory.push('/');
     });
-  }
-
-  componentDidMount() {
-    const cache = JSON.parse(localStorage.CBN_task ? localStorage.CBN_task : null);
-    const {date} = cache ? cache : {};
-    date && this.setState(cache);
   }
 }
