@@ -69,7 +69,8 @@ export default class TaskCreate extends React.Component {
     }));
   }
 
-  fillWithLastDay = () => {
+  fillWithLastDay = e => {
+    e.preventDefault();
     this.setState({
       lastDay: this.state.cachedLastDay,
     });
