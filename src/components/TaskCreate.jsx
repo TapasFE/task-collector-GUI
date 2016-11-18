@@ -83,8 +83,7 @@ export default class TaskCreate extends React.Component {
   loadLastDay() {
     const {name} = this.state;
     if (!name) return;
-    const date = formatDate(new Date(Date.now() - 24 * 60 * 60 * 1000));
-    fetch(`/api/tasks?user=${name}&date=${date}`)
+    fetch(`/api/tasks?user=${encodeURIComponent(name)}&date=lastDay`)
     .then(res => res.json())
     .then(data => data.rows[0])
     .then(item => {
