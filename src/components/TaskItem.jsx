@@ -9,13 +9,20 @@ export default class TaskItem extends React.Component {
           <div className="panel-title">{user.name}</div>
         </div>
         <div className="panel-body">
-          <dt>昨日任务</dt>
-          <dd><pre>{data.lastDay}</pre></dd>
-          <dt>今日任务</dt>
-          <dd><pre>{data.today}</pre></dd>
-          <dt>当前风险</dt>
-          <dd><pre>{data.risks}</pre></dd>
+          {this.renderItem('昨日任务', data.lastDay)}
+          {this.renderItem('今日任务', data.today)}
+          {this.renderItem('当前风险', data.risks)}
         </div>
+      </div>
+    );
+  }
+
+  renderItem(title, value) {
+    if (!value || /^\s*无?\s*$/.test(value)) return null;
+    return (
+      <div>
+        <h4>{title}</h4>
+        <pre>{value}</pre>
       </div>
     );
   }

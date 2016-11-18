@@ -46,7 +46,7 @@ export default class TaskCreate extends React.Component {
           <textarea className="form-control" value={today} onChange={this.getHandlerChange('today')} />
         </div>
         <div className="form-group">
-          <label>目前风险</label>
+          <label>当前风险</label>
           <textarea className="form-control" value={risks} onChange={this.getHandlerChange('risks')} />
         </div>
         <button className="btn btn-primary" type="submit">提交</button>
@@ -94,7 +94,9 @@ export default class TaskCreate extends React.Component {
       } catch (e) {
         // ignore invalid data
       }
-      const {today} = data || {};
+      return data && data.today;
+    })
+    .then(today => {
       this.setState({
         lastDay: this.state.lastDay || today,
         cachedLastDay: today,
@@ -122,7 +124,7 @@ export default class TaskCreate extends React.Component {
       body: JSON.stringify(data),
     })
     .then(() => {
-      localStorage.removeItem(TASK_KEY);
+      localStorage.setItem(TASK_KEY, {name});
       browserHistory.push('/');
     });
   }
