@@ -1,5 +1,11 @@
+function leftpad(s, l, p='0') {
+  s = s.toString();
+  while (s.length < l) s = p + s;
+  return s;
+}
+
 export function formatDate(date) {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  return `${date.getFullYear()}-${leftpad(date.getMonth() + 1, 2)}-${leftpad(date.getDate(), 2)}`;
 }
 
 export function debounce(func, time) {

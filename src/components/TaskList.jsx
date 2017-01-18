@@ -1,6 +1,7 @@
 import React from 'react';
 import TaskItem from './TaskItem';
 import {formatDate, debounce} from '../utils';
+import {Tasks} from '../restful';
 
 export default class TaskList extends React.Component {
   constructor(props) {
@@ -18,8 +19,7 @@ export default class TaskList extends React.Component {
 
   loadData() {
     const {date} = this.state;
-    fetch(`/api/tasks?date=${date}`)
-    .then(res => res.json())
+    Tasks.get(null, {date})
     .then(data => data.rows.map(item => {
       try {
         item.data = JSON.parse(item.content);
@@ -35,8 +35,8 @@ export default class TaskList extends React.Component {
   render() {
     const {date} = this.state;
     return (
-      <div className="task-list flex-auto flex-row">
-        <div className="col col-sm-3 hidden-xs flex-col">
+      <div className="row h-100">
+        <div className="col col-sm-3 hidden-xs d-flex flex-column">
           <div className="form-group">
             <input className="form-control" type="date" value={date} onChange={this.handleDateChange} />
           </div>
@@ -44,7 +44,7 @@ export default class TaskList extends React.Component {
             {this.renderNames()}
           </div>
         </div>
-        <div className="col col-sm-9 col-xs-12">
+        <div className="col col-sm-9 col-xs-12 overflow-auto">
           {this.renderItems()}
         </div>
       </div>

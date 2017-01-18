@@ -1,15 +1,16 @@
-require('dotenv').config({silent: true});
-var path = require('path')
-var express = require('express')
-var webpack = require('webpack')
-var config = require('../config')
-var proxyMiddleware = require('http-proxy-middleware')
-var webpackConfig = process.env.NODE_ENV === 'testing'
+const path = require('path')
+const express = require('express')
+const webpack = require('webpack')
+const nodemon = require('nodemon')
+const config = require('../config')
+const proxyMiddleware = require('http-proxy-middleware')
+const NODE_ENV = config.nconf.get('NODE_ENV');
+const webpackConfig = NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf')
 
 // default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.dev.port
+var port = config.dev.port
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable

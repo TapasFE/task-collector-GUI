@@ -1,16 +1,14 @@
 {
-  "name": "task-collector-ui",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "task-collector-web",
+  "version": "0.0.0",
+  "description": "Task collector",
   "scripts": {
     "dev": "node build/dev-server.js",
     "predeploy": "node build/build.js",
     "deploy": "rsync -r dist/ -e 'ssh -p 10522' -v --delete root@test:~/web/task-collector/static",
     "lint": "eslint --ext .js,.jsx src"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Gerald <i@gerald.top>",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -43,6 +41,7 @@
     "react-dom": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-router": "^3.0.0",
+    "restful-fetch": "^0.5.2",
     "sass-loader": "^4.0.2",
     "shelljs": "^0.7.4",
     "style-loader": "^0.13.1",
@@ -50,7 +49,6 @@
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",
-    "webpack-merge": "^0.14.1",
-    "whatwg-fetch": "^2.0.1"
+    "webpack-merge": "^0.14.1"
   }
 }

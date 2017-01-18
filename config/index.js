@@ -1,5 +1,5 @@
-// see http://vuejs-templates.github.io/webpack for documentation.
-var path = require('path');
+const path = require('path');
+const nconf = require('./nconf');
 
 module.exports = {
   build: {
@@ -18,11 +18,12 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: nconf.get('PORT'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api/': process.env.BACKEND_ROOT || 'http://localhost:4333/',
+      '/api/': nconf.get('API_HOST'),
+      '/account/': nconf.get('API_HOST'),   // just for debugging
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
@@ -30,5 +31,6 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
-  }
+  },
+  nconf,
 }

@@ -4,11 +4,14 @@ export default class TaskItem extends React.Component {
   render() {
     const {id, data, user} = this.props.data;
     return (
-      <div className="panel panel-default" id={`task-${id}`}>
-        <div className="panel-heading">
-          <div className="panel-title">{user.name}</div>
+      <div className="card task-item mb-3" id={`task-${id}`}>
+        <div className="card-header">
+          <div className="task-buttons float-right">
+            <i className="fa fa-thumbs-o-up"></i>
+          </div>
+          {user.name}
         </div>
-        <div className="panel-body">
+        <div className="card-block">
           {this.renderItem('昨日任务', data.lastDay)}
           {this.renderItem('今日任务', data.today)}
           {this.renderItem('当前风险', data.risks)}
@@ -21,7 +24,7 @@ export default class TaskItem extends React.Component {
     if (!value || /^\s*无?\s*$/.test(value)) return null;
     return (
       <div>
-        <h4>{title}</h4>
+        <div className="card-title">{title}</div>
         <pre>{value}</pre>
       </div>
     );
