@@ -1,7 +1,6 @@
 const path = require('path')
 const express = require('express')
 const webpack = require('webpack')
-const nodemon = require('nodemon')
 const config = require('../config')
 const proxyMiddleware = require('http-proxy-middleware')
 const NODE_ENV = config.nconf.get('NODE_ENV');

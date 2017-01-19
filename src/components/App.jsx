@@ -9,8 +9,8 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    Me.get().then(me => {
-      this.setState({me});
+    Me.get().then(res => {
+      this.setState({me: res.data});
     }, err => {
       if (err.status === 401) {
         // Not logged in

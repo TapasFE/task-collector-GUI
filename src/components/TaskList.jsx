@@ -20,7 +20,7 @@ export default class TaskList extends React.Component {
   loadData() {
     const {date} = this.state;
     Tasks.get(null, {date})
-    .then(data => data.rows.map(item => {
+    .then(res => res.data.map(item => {
       try {
         item.data = JSON.parse(item.content);
       } catch (e) {

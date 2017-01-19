@@ -2,7 +2,6 @@ import Restful from 'restful-fetch';
 
 export const restful = new Restful({
   root: '/api',
-  presets: ['json'],
   config: {
     credentials: 'same-origin',
   },
