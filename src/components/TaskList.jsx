@@ -1,7 +1,8 @@
 import React from 'react';
 import TaskItem from './TaskItem';
 import {formatDate, debounce} from '../utils';
-import {Tasks} from '../restful';
+import store from 'src/services/store';
+import {Tasks} from 'src/services/restful';
 
 export default class TaskList extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class TaskList extends React.Component {
   }
 
   loadData() {
+    const {me} = store;
     const {date} = this.state;
     Tasks.get(null, {date})
     .then(res => res.data.map(item => {
@@ -27,6 +29,7 @@ export default class TaskList extends React.Component {
         // ignore invalid data
       }
       item.data = item.data || {};
+      item.isAdmirer = item.admirers.some(item => item.id === me.id);
       return item;
     }))
     .then(data => this.setState({data}));
@@ -60,11 +63,40 @@ export default class TaskList extends React.Component {
 
   renderItems() {
     const {data} = this.state;
-    return data.map((item, index) => <TaskItem key={index} data={item} />);
+    return data.map((item, index) => (
+      <TaskItem
+        key={index}
+        data={item}
+        onAdmire={this.getAdmireHandler(item)}
+      />
+    ));
   }
 
   handleDateChange = e => {
     this.setState({date: e.target.value});
     this.debouncedLoadData();
+  }
+
+  getAdmireHandler(item) {
+    const {me} = store;
+    return e => {
+      const model = Tasks.model(item.id, 'admirer');
+      (item.isAdmirer ? model.delete() : model.put())
+      .then(() => {
+        const {isAdmirer} = item;
+        const newItem = {
+          ...item,
+          isAdmirer: !isAdmirer,
+          admirers: (
+            isAdmirer
+            ? item.admirers.filter(admirer => admirer.id !== me.id)
+            : item.admirers.concat([me])
+          ),
+        };
+        this.setState({
+          data: this.state.data.map(item => item.id === newItem.id ? newItem : item),
+        });
+      });
+    };
   }
 }

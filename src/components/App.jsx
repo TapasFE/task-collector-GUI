@@ -1,30 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router';
-import {Me} from '../restful';
+import store from 'src/services/store';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {me: {}};
-  }
-
-  componentWillMount() {
-    Me.get().then(res => {
-      this.setState({me: res.data});
-    }, err => {
-      if (err.status === 401) {
-        // Not logged in
-        location.replace('/account/login');
-      } else if (err.status === 404) {
-        // Invalid user
-        location.replace('/account/logout');
-      }
-    });
-  }
-
-  renderNav() {
-    const {me} = this.state;
-    const {routes} = this.props;
+export default function App(props) {
+  function renderNav() {
+    const {me} = store;
+    const {routes} = props;
     const route = routes[routes.length - 1];
     return (
       <header className="container mt-4 mb-3">
@@ -52,12 +33,10 @@ export default class App extends React.Component {
     );
   }
 
-  render() {
-    return (
-      <div className="d-flex flex-column h-100">
-        {this.renderNav()}
-        <div className="container flex-auto mb-3">{this.props.children}</div>
-      </div>
-    );
-  }
+  return (
+    <div className="d-flex flex-column h-100">
+      {renderNav()}
+      <div className="container flex-auto mb-3">{props.children}</div>
+    </div>
+  );
 }

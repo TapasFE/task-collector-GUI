@@ -1,7 +1,7 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import {debounce} from '../utils';
-import {Me, Tasks} from '../restful';
+import {Me, Tasks} from 'src/services/restful';
 
 const TASK_KEY = '__task';
 

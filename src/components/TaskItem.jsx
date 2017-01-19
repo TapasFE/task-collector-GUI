@@ -2,12 +2,16 @@ import React from 'react';
 
 export default class TaskItem extends React.Component {
   render() {
-    const {id, data, user} = this.props.data;
+    const {id, data, user, admirers, isAdmirer} = this.props.data;
     return (
       <div className="card task-item mb-3" id={`task-${id}`}>
         <div className="card-header">
           <div className="task-buttons float-right">
-            <i className="fa fa-thumbs-o-up"></i>
+            <i
+              className={`fa ${isAdmirer ? 'fa-thumbs-up' : 'fa-thumbs-o-up'} cursor-pointer`}
+              onClick={this.props.onAdmire}
+            ></i>
+            {admirers.length || ''}
           </div>
           {user.name}
         </div>
