@@ -15,7 +15,6 @@ function loadMe(nextState, replace, callback) {
     store.me = res.data;
   })
   .then(callback, err => {
-    callback(err);
     if (err.status === 401) {
       // Not logged in
       location.replace('/account/login');
@@ -23,6 +22,7 @@ function loadMe(nextState, replace, callback) {
       // Invalid user
       location.replace('/account/logout');
     }
+    callback(err);
   });
 }
 

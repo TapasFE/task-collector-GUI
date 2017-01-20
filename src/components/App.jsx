@@ -4,7 +4,7 @@ import store from 'src/services/store';
 
 export default function App(props) {
   function renderNav() {
-    const {me} = store;
+    const {me={}} = store;
     const {routes} = props;
     const route = routes[routes.length - 1];
     return (

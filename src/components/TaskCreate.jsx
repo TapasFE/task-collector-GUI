@@ -79,6 +79,7 @@ export default class TaskCreate extends React.Component {
 
   loadLastDay() {
     Me.get('last_day_task')
+    .then(res => res.data)
     .then(item => {
       if (!item) return;
       let data;

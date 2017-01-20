@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "predeploy": "node build/build.js",
-    "deploy": "rsync -r dist/ -e 'ssh -p 10522' -v --delete root@test:~/web/task-collector/static",
+    "deploy": "rsync -r dist/ -e 'ssh -p 10522' -v --delete root@test:~/web/task-collector/dist",
     "lint": "eslint --ext .js,.jsx src"
   },
   "author": "Gerald <i@gerald.top>",
