@@ -1,8 +1,8 @@
 task collection
 ---
 
-start
+Development
 ---
 ``` sh
-$ npm start
+$ npm run dev
 ```

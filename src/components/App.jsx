@@ -24,8 +24,8 @@ export default function App(props) {
           </li>
           {me.id &&
               <li className="user-corner ml-auto">
-                <img src={me.avatar} />
-                <span className="ml-2 hidden-xs">{me.name}</span>
+                <div className="avatar align-middle"><img src={me.avatar} /></div>
+                <span className="ml-2 hidden-xs align-middle">{me.name}</span>
               </li>
           }
         </ul>

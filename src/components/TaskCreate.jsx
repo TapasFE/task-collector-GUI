@@ -28,7 +28,7 @@ export default class TaskCreate extends React.Component {
   }
 
   render() {
-    const {lastDay, today, risks} = this.state;
+    const {lastDay, today, risks, message} = this.state;
     return (
       <div className="row task-create">
         <form className="col-12" onSubmit={this.handleSubmit}>
@@ -45,8 +45,11 @@ export default class TaskCreate extends React.Component {
             <label>当前风险</label>
             <textarea className="form-control" value={risks} onChange={this.getHandlerChange('risks')} />
           </div>
-          <button className="btn btn-primary" type="submit">提交</button>
-          <span className="text-muted ml-3">您的修改将自动保存到本地</span>
+          <button className="btn btn-primary mr-3" type="submit">提交</button>
+          {message
+              ? <span className="text-danger">{message}</span>
+              : <span className="text-muted">您的修改将自动保存到本地</span>
+          }
         </form>
       </div>
     );
@@ -101,7 +104,12 @@ export default class TaskCreate extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     const {lastDay, today, risks} = this.state;
-    if (!lastDay || !today) return;
+    if (!lastDay || !today) {
+      this.setState({
+        message: '请填写昨日任务和今日任务！',
+      });
+      return;
+    }
     Tasks.post(null, {
       content: JSON.stringify({
         lastDay,
