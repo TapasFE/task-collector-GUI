@@ -24,7 +24,7 @@ export default class TaskItem extends React.Component {
             <div className="card-footer">
               <span className="align-middle">{admirers.length}人赞了：</span>
               {admirers.map((admirer, index) => (
-                <div className="avatar mr-1 align-middle" key={index}>
+                <div className="avatar mr-1 align-middle" key={index} title={admirer.name}>
                   <img src={admirer.avatar} />
                 </div>
               ))}

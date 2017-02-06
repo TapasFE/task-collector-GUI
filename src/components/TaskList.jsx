@@ -32,7 +32,14 @@ export default class TaskList extends React.Component {
       item.isAdmirer = item.admirers.some(item => item.id === me.id);
       return item;
     }))
-    .then(data => this.setState({data}));
+    .then(data => {
+      data.sort((a, b) => {
+        const lenA = a.admirers && a.admirers.length || 0;
+        const lenB = b.admirers && b.admirers.length || 0;
+        return Math.sign(lenB - lenA);
+      });
+      this.setState({data});
+    });
   }
 
   render() {
