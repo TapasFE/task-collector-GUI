@@ -11,36 +11,50 @@ exports.assetsPath = function (_path) {
 
 exports.cssLoaders = function (options) {
   options = options || {}
-  // generate loader string to be used with extract text plugin
   function generateLoaders (loaders) {
-    var sourceLoader = loaders.map(function (loader) {
-      var extraParamChar
-      if (/\?/.test(loader)) {
-        loader = loader.replace(/\?/, '-loader?')
-        extraParamChar = '&'
+    loaders = loaders.map(loader => {
+      if (typeof loader === 'string') {
+        loader = { loader };
       } else {
-        loader = loader + '-loader'
-        extraParamChar = '?'
+        loader = Object.assign({}, loader);
       }
-      return loader + (options.sourceMap ? extraParamChar + 'sourceMap' : '')
-    }).join('!')
-
+      if (options.sourceMap) {
+        loader.options = Object.assign({}, loader.options, {
+          sourceMap: true,
+        });
+      }
+      return loader;
+    });
     if (options.extract) {
-      return ExtractTextPlugin.extract('style-loader', sourceLoader)
+      return ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: loaders,
+      })
     } else {
-      return ['style-loader', sourceLoader].join('!')
+      return [
+        'style-loader',
+        ...loaders,
+      ]
     }
   }
 
   // http://vuejs.github.io/vue-loader/configurations/extract-css.html
   return {
-    css: generateLoaders(['css']),
-    postcss: generateLoaders(['css']),
-    less: generateLoaders(['css', 'less']),
-    sass: generateLoaders(['css', 'sass?indentedSyntax']),
-    scss: generateLoaders(['css', 'sass']),
-    stylus: generateLoaders(['css', 'stylus']),
-    styl: generateLoaders(['css', 'stylus'])
+    css: generateLoaders(['css-loader']),
+    postcss: generateLoaders(['css-loader']),
+    less: generateLoaders(['css-loader', 'less-loader']),
+    sass: generateLoaders([
+      'css-loader',
+      {
+        loader: 'sass-loader',
+        options: {
+          indentedSyntax: true,
+        },
+      },
+    ]),
+    scss: generateLoaders(['css-loader', 'sass-loader']),
+    stylus: generateLoaders(['css-loader', 'stylus-loader']),
+    styl: generateLoaders(['css-loader', 'stylus-loader'])
   }
 }
 
@@ -49,10 +63,10 @@ exports.styleLoaders = function (options) {
   var output = []
   var loaders = exports.cssLoaders(options)
   for (var extension in loaders) {
-    var loader = loaders[extension]
+    var use = loaders[extension]
     output.push({
       test: new RegExp('\\.' + extension + '$'),
-      loader: loader
+      use,
     })
   }
   return output
