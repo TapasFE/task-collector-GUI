@@ -46,7 +46,7 @@ export default class TaskList extends React.Component {
     const {date} = this.state;
     return (
       <div className="row h-100">
-        <div className="col col-sm-3 hidden-xs d-flex flex-column">
+        <div className="col col-md-4 col-lg-3 hidden-sm-down d-flex flex-column">
           <div className="form-group">
             <input className="form-control" type="date" value={date} onChange={this.handleDateChange} />
           </div>
@@ -54,7 +54,7 @@ export default class TaskList extends React.Component {
             {this.renderNames()}
           </div>
         </div>
-        <div className="col col-sm-9 col-xs-12 overflow-auto">
+        <div className="col col-md-8 col-lg-9 col-xs-12 overflow-auto">
           {this.renderItems()}
         </div>
       </div>

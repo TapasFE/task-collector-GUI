@@ -8,9 +8,9 @@ export default function App(props) {
     const {routes} = props;
     const route = routes[routes.length - 1];
     return (
-      <header className="container mt-4 mb-3">
+      <header className="mt-4 mb-3">
         <ul className="nav nav-tabs">
-          <li>
+          <li className="hidden-xs-down">
             <span className="navbar-brand">Task Collector</span>
           </li>
           <li className="nav-item">
@@ -25,7 +25,7 @@ export default function App(props) {
           {me.id &&
               <li className="user-corner ml-auto">
                 <div className="avatar align-middle"><img src={me.avatar} /></div>
-                <span className="ml-2 hidden-xs align-middle">{me.name}</span>
+                <span className="ml-2 hidden-xs-down align-middle">{me.name}</span>
               </li>
           }
         </ul>
@@ -34,9 +34,13 @@ export default function App(props) {
   }
 
   return (
-    <div className="d-flex flex-column h-100">
+    <div className="d-flex flex-column container h-100">
       {renderNav()}
-      <div className="container flex-auto mb-3">{props.children}</div>
+      <div className="flex-auto mb-3">
+        <div className="container-fluid">
+          {props.children}
+        </div>
+      </div>
     </div>
   );
 }

@@ -9,5 +9,9 @@
 </head>
 <body>
   <div id="app"></div>
+  <% if (htmlWebpackPlugin.options.development) { %>
+  <script src="//cdn.bootcss.com/eruda/1.2.1/eruda.min.js"></script>
+  <script>eruda.init()</script>
+  <% } %>
 </body>
 </html>
