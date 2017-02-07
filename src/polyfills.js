@@ -16,3 +16,7 @@ polyfill(Object, 'assign', (obj, ...args) => {
   });
   return obj;
 });
+
+polyfill(Math, 'sign', value => {
+  return value < 0 ? -1 : value > 0 ? 1 : 0;
+});
