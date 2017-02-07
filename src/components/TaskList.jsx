@@ -45,19 +45,17 @@ export default class TaskList extends React.Component {
   render() {
     const {date} = this.state;
     return (
-      <div className="flex-auto task-list">
-        <div className="row">
-          <div className="col col-md-4 col-lg-3 hidden-sm-down d-flex flex-column">
-            <div className="form-group">
-              <input className="form-control" type="date" value={date} onChange={this.handleDateChange} />
-            </div>
-            <div className="list-group flex-auto">
-              {this.renderNames()}
-            </div>
+      <div className="flex-auto row pb-3">
+        <div className="col-md-4 col-lg-3 hidden-sm-down d-flex flex-column">
+          <div className="form-group">
+            <input className="form-control" type="date" value={date} onChange={this.handleDateChange} />
           </div>
-          <div className="col col-md-8 col-lg-9 col-xs-12">
-            {this.renderItems()}
+          <div className="flex-auto overflow-auto">
+            <div className="list-group">{this.renderNames()}</div>
           </div>
+        </div>
+        <div className="col-md-8 col-lg-9 col-xs-12 overflow-auto">
+          <div>{this.renderItems()}</div>
         </div>
       </div>
     );

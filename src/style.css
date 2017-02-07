@@ -5,6 +5,9 @@
 .flex-auto {
   height: 0;
   flex: auto;
+}
+
+.overflow-auto {
   overflow: auto;
 }
 

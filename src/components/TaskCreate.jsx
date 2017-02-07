@@ -30,29 +30,27 @@ export default class TaskCreate extends React.Component {
   render() {
     const {lastDay, today, risks, message} = this.state;
     return (
-      <div className="flex-auto pb-3">
-        <div className="row task-create">
-          <form className="col-12" onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <button className="btn btn-secondary btn-sm float-right" onClick={this.fillWithLastDay} disabled={!this.hasCachedLastDay()}>填入昨日数据</button>
-              <label>昨日任务</label>
-              <textarea className="form-control" value={lastDay} onChange={this.getHandlerChange('lastDay')} />
-            </div>
-            <div className="form-group">
-              <label>今日任务</label>
-              <textarea className="form-control" value={today} onChange={this.getHandlerChange('today')} />
-            </div>
-            <div className="form-group">
-              <label>当前风险</label>
-              <textarea className="form-control" value={risks} onChange={this.getHandlerChange('risks')} />
-            </div>
-            <button className="btn btn-primary mr-3" type="submit">提交</button>
-            {message
-                ? <span className="text-danger">{message}</span>
-                : <span className="text-muted">您的修改将自动保存到本地</span>
-            }
-          </form>
-        </div>
+      <div className="flex-auto row task-create pb-3">
+        <form className="col-12 overflow-auto" onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <button className="btn btn-secondary btn-sm float-right" onClick={this.fillWithLastDay} disabled={!this.hasCachedLastDay()}>填入昨日数据</button>
+            <label>昨日任务</label>
+            <textarea className="form-control" value={lastDay} onChange={this.getHandlerChange('lastDay')} />
+          </div>
+          <div className="form-group">
+            <label>今日任务</label>
+            <textarea className="form-control" value={today} onChange={this.getHandlerChange('today')} />
+          </div>
+          <div className="form-group">
+            <label>当前风险</label>
+            <textarea className="form-control" value={risks} onChange={this.getHandlerChange('risks')} />
+          </div>
+          <button className="btn btn-primary mr-3" type="submit">提交</button>
+          {message
+              ? <span className="text-danger">{message}</span>
+              : <span className="text-muted">您的修改将自动保存到本地</span>
+          }
+        </form>
       </div>
     );
   }
