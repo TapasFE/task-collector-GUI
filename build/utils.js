@@ -10,7 +10,6 @@ exports.assetsPath = function (_path) {
 }
 
 exports.cssLoaders = function (options) {
-  options = options || {}
   function generateLoaders (loaders) {
     loaders = loaders.map(loader => {
       if (typeof loader === 'string') {
@@ -37,28 +36,44 @@ exports.cssLoaders = function (options) {
       ]
     }
   }
-
-  // http://vuejs.github.io/vue-loader/configurations/extract-css.html
+  options = options || {}
+  const cssLoaders = [
+    {
+      loader: 'css-loader',
+      options: {
+        importLoaders: 1,
+      },
+    },
+    {
+      loader: 'postcss-loader',
+      options: {
+        plugins() {
+          return [
+            require('precss'),
+            require('autoprefixer'),
+          ];
+        },
+      },
+    },
+  ];
   return {
-    css: generateLoaders(['css-loader']),
-    postcss: generateLoaders(['css-loader']),
-    less: generateLoaders(['css-loader', 'less-loader']),
-    sass: generateLoaders([
-      'css-loader',
+    css: generateLoaders(cssLoaders),
+    postcss: generateLoaders(cssLoaders),
+    less: generateLoaders(cssLoaders.concat(['less-loader'])),
+    sass: generateLoaders(cssLoaders.concat([
       {
         loader: 'sass-loader',
         options: {
           indentedSyntax: true,
         },
       },
-    ]),
-    scss: generateLoaders(['css-loader', 'sass-loader']),
-    stylus: generateLoaders(['css-loader', 'stylus-loader']),
-    styl: generateLoaders(['css-loader', 'stylus-loader'])
+    ])),
+    scss: generateLoaders(cssLoaders.concat(['sass-loader'])),
+    stylus: generateLoaders(cssLoaders.concat(['stylus-loader'])),
+    styl: generateLoaders(cssLoaders.concat(['stylus-loader'])),
   }
 }
 
-// Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
   var output = []
   var loaders = exports.cssLoaders(options)

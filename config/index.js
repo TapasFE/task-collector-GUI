@@ -22,8 +22,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api/': nconf.get('API_HOST'),
-      '/account/': nconf.get('API_HOST'),   // just for debugging
+      '/api/': {
+        target: nconf.get('API_HOST'),
+        changeOrigin: true,
+      },
+      '/account/': {
+        target: nconf.get('API_HOST'),   // just for debugging
+        changeOrigin: true,
+      },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

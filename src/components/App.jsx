@@ -36,11 +36,7 @@ export default function App(props) {
   return (
     <div className="d-flex flex-column container h-100">
       {renderNav()}
-      <div className="flex-auto mb-3">
-        <div className="container-fluid">
-          {props.children}
-        </div>
-      </div>
+      {props.children}
     </div>
   );
 }

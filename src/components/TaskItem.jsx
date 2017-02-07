@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class TaskItem extends React.Component {
   render() {
-    let {id, data, user, admirers, isAdmirer} = this.props.data;
+    const {id, data, user, admirers, isAdmirer} = this.props.data;
     return (
       <div className="card task-item mb-3" id={`task-${id}`}>
         <div className="card-header">
